@@ -8,7 +8,40 @@ namespace GeniusIdiotConsoleApp
 {
     internal class Program
     {
-        static (string Question, int Answer)[] GetQuestionsAnswers()
+        public static void Main(string[] args)
+        {
+            bool repeatTest = true;
+
+            Console.WriteLine("Введите Ваше имя:");
+            string name = Console.ReadLine();
+
+            while (repeatTest)
+            {
+                string result = AskQuestion();
+                Console.WriteLine($"{name}, поздравляю! Вы - {result}");
+                repeatTest = RepeatTest();
+            }
+        }
+
+        private static string AskQuestion()
+        {
+            int rightAnswers = 0;
+
+            (string Question, int Answer)[] QuestionsAnswers = ShuffleArray(GetQuestionsAnswers());
+
+            for (int i = 0; i < QuestionsAnswers.Length; i++)
+            {
+                Console.WriteLine(QuestionsAnswers[i].Question);
+                int userAnswer = TryParseInt();
+                if (userAnswer == QuestionsAnswers[i].Answer)
+                {
+                    rightAnswers++;
+                }
+            }
+            return GetResult(rightAnswers);
+        }
+
+        private static (string Question, int Answer)[] GetQuestionsAnswers()
         {
             var questionsAnswers = new (string Question, int Answer)[5];
             questionsAnswers[0] = (Question: "Сколько будет два плюс два умноженное на два?", Answer: 6);
@@ -19,19 +52,22 @@ namespace GeniusIdiotConsoleApp
             return questionsAnswers;
         }
 
-        static (string Question, int Answer)[] ShuffleArray((string Question, int Answer)[] array)
+        private static (string Question, int Answer)[] ShuffleArray((string Question, int Answer)[] array)
         {
-            Random rndQA = new Random();            
+            Random questionRandomizer = new Random();
+
             for (int i = (array.Length - 1); i >= 0; i--)
             {
-                int j = rndQA.Next(i + 1);
+                int j = questionRandomizer.Next(i + 1);
                 (array[i], array[j]) = (array[j], array[i]);
             }
             return array;
         }
 
-        static string GetResult(int rightAnswers)
+        private static string GetResult(int rightAnswers)
         {
+            Console.WriteLine($"Количество верных ответов: {rightAnswers}");
+
             switch (rightAnswers)
             {
                 case 1:
@@ -48,7 +84,7 @@ namespace GeniusIdiotConsoleApp
             return "идиот!";
         }
 
-        static int NumberCheck()
+        private static int TryParseInt()
         {
             while (true)
             {
@@ -61,24 +97,7 @@ namespace GeniusIdiotConsoleApp
             }
         }
 
-        static string AskQuestion()
-        {
-            int rightAnswers = 0;
-            (string Question, int Answer)[] QuestionsAnswers = ShuffleArray(GetQuestionsAnswers());
-
-            for (int i = 0; i < QuestionsAnswers.Length; i++)
-            {
-                Console.WriteLine(QuestionsAnswers[i].Question);
-                int userAnswer = NumberCheck();
-                if (userAnswer == QuestionsAnswers[i].Answer)
-                {
-                    rightAnswers++;
-                }
-            }
-            return GetResult(rightAnswers);
-        }
-
-        static bool RepeatTest()
+        private static bool RepeatTest()
         {
             while (true)
             {
@@ -97,19 +116,6 @@ namespace GeniusIdiotConsoleApp
                     Console.WriteLine("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'");
                 }
             }
-        }
-
-        static void Main(string[] args)
-        {
-            bool repeatTest = true;
-            Console.WriteLine("Введите Ваше имя:");
-            string name = Console.ReadLine();
-            while (repeatTest)
-            {
-                string result = AskQuestion();
-                Console.WriteLine($"{name}, поздравляю! Вы - {result}");
-                repeatTest = RepeatTest();
-            }
-        }
+        }        
     }
 }
