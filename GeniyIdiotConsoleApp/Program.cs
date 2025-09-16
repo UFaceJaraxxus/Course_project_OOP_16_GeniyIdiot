@@ -66,20 +66,29 @@ namespace GeniusIdiotConsoleApp
 
         private static string GetResult(int rightAnswers)
         {
-            Console.WriteLine($"Количество верных ответов: {rightAnswers}");
+            Console.WriteLine($"Количество верных ответов: {rightAnswers} / {GetQuestionsAnswers().Length}");
 
-            switch (rightAnswers)
+            int ratioRightAnswers = (rightAnswers * 100) / GetQuestionsAnswers().Length;
+
+            if (ratioRightAnswers >= 1 && ratioRightAnswers <= 20)
             {
-                case 1:
-                    return "кретин!";
-                case 2:
-                    return "дурак!";
-                case 3:
-                    return "нормальный!";
-                case 4:
-                    return "талант!";
-                case 5:
-                    return "гений!";
+                return "кретин!";
+            }
+            else if (ratioRightAnswers >= 21 && ratioRightAnswers <= 40)
+            {
+                return "дурак!";
+            }
+            else if (ratioRightAnswers >= 41 && ratioRightAnswers <= 60)
+            {
+                return "нормальный!";
+            }
+            else if (ratioRightAnswers >= 61 && ratioRightAnswers <= 80)
+            {
+                return "талант!";
+            }
+            else if (ratioRightAnswers >= 81)
+            {
+                return "гений!";
             }
             return "идиот!";
         }
