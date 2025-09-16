@@ -27,13 +27,13 @@ namespace GeniusIdiotConsoleApp
         {
             int rightAnswers = 0;
 
-            (string Question, int Answer)[] QuestionsAnswers = ShuffleArray(GetQuestionsAnswers());
+            (string Question, int Answer)[] questionsAnswers = ShuffleArray(GetQuestionsAnswers());
 
-            for (int i = 0; i < QuestionsAnswers.Length; i++)
+            for (int i = 0; i < questionsAnswers.Length; i++)
             {
-                Console.WriteLine(QuestionsAnswers[i].Question);
+                Console.WriteLine(questionsAnswers[i].Question);
                 int userAnswer = TryParseInt();
-                if (userAnswer == QuestionsAnswers[i].Answer)
+                if (userAnswer == questionsAnswers[i].Answer)
                 {
                     rightAnswers++;
                 }
