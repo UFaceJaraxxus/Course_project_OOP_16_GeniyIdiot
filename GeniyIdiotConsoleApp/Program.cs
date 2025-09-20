@@ -73,17 +73,17 @@ namespace GeniusIdiotConsoleApp
             switch (ratioRightAnswers)
             {
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 81:
-                    return "гений!";
+                    return "гений";
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 61:
-                    return "талант!";
+                    return "талант";
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 41:
-                    return "нормальный!";
+                    return "нормальный";
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 21:
-                    return "дурак!";
+                    return "дурак";
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 1:
-                    return "кретин!";         
+                    return "кретин";         
             }
-            return "идиот!";
+            return "идиот";
         }
 
         private static int TryParseInt()
