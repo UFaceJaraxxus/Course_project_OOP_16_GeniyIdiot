@@ -36,7 +36,7 @@ namespace GeniusIdiotConsoleApp
             }
             else
             {
-                Console.WriteLine("Завершениея тестирования");
+                Console.WriteLine("Завершениея программы");
             }
         }
 
@@ -109,25 +109,18 @@ namespace GeniusIdiotConsoleApp
 
             int ratioRightAnswers = (rightAnswers * 100) / GetQuestionsAnswers().Length;
 
-            if (ratioRightAnswers >= 1 && ratioRightAnswers <= 20)
+            switch (ratioRightAnswers)
             {
-                return "кретин";
-            }
-            else if (ratioRightAnswers >= 21 && ratioRightAnswers <= 40)
-            {
-                return "дурак";
-            }
-            else if (ratioRightAnswers >= 41 && ratioRightAnswers <= 60)
-            {
-                return "нормальный";
-            }
-            else if (ratioRightAnswers >= 61 && ratioRightAnswers <= 80)
-            {
-                return "талант";
-            }
-            else if (ratioRightAnswers >= 81)
-            {
-                return "гений";
+                case int currentRatioRightAnswers when currentRatioRightAnswers >= 81:
+                    return "гений";
+                case int currentRatioRightAnswers when currentRatioRightAnswers >= 61:
+                    return "талант";
+                case int currentRatioRightAnswers when currentRatioRightAnswers >= 41:
+                    return "нормальный";
+                case int currentRatioRightAnswers when currentRatioRightAnswers >= 21:
+                    return "дурак";
+                case int currentRatioRightAnswers when currentRatioRightAnswers >= 1:
+                    return "кретин";
             }
             return "идиот";
         }
