@@ -1,31 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GeniusIdiotConsoleApp
-{
+{    
     internal class Program
     {
+        static string logPath = "Журнал тестирования.txt";
+        static int rightAnswers = 0;
+
         public static void Main(string[] args)
         {
             bool repeatTest = true;
 
-            Console.WriteLine("Введите Ваше имя:");
-            string name = Console.ReadLine();
+            string fullName = GetFullName();
 
             while (repeatTest)
             {
                 string result = AskQuestion();
-                Console.WriteLine($"{name}, поздравляю! Вы - {result}");
+                Console.WriteLine($"{fullName}, поздравляю! Вы - {result}!");
                 repeatTest = RepeatTest();
+                WriteToLog(fullName, rightAnswers, result);
+                Console.WriteLine("Результат записан в журнал тестирования");
             }
+
+            Console.WriteLine("Желаете открыть журнал тестирования? (да/нет)");
+            string userChoice = Console.ReadLine();
+
+            if (userChoice.ToLower() == "да")
+            {
+                OpenLog();
+            }
+            else
+            {
+                Console.WriteLine("Завершениея программы");
+            }
+        }
+
+        private static string GetFullName()
+        {
+            Console.WriteLine("Введите фамилию:");
+            string lastName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(lastName))
+                lastName = char.ToUpper(lastName[0]) + lastName.Substring(1).ToLower();
+
+            Console.WriteLine("Введите имя:");
+            string firstName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(firstName))
+                firstName = char.ToUpper(firstName[0]) + firstName.Substring(1).ToLower();
+
+            Console.WriteLine("Введите отчество:");
+            string middleName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(middleName))
+                middleName = char.ToUpper(middleName[0]) + middleName.Substring(1).ToLower();
+
+            string fullName = lastName + " " + firstName + " " + middleName;
+
+            return fullName;
         }
 
         private static string AskQuestion()
         {
-            int rightAnswers = 0;
+            rightAnswers = 0;
 
             (string Question, int Answer)[] questionsAnswers = ShuffleArray(GetQuestionsAnswers());
 
@@ -81,7 +120,7 @@ namespace GeniusIdiotConsoleApp
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 21:
                     return "дурак";
                 case int currentRatioRightAnswers when currentRatioRightAnswers >= 1:
-                    return "кретин";         
+                    return "кретин";
             }
             return "идиот";
         }
@@ -104,11 +143,11 @@ namespace GeniusIdiotConsoleApp
             while (true)
             {
                 Console.WriteLine("Вы желаете повторить тест? (да/нет)");
-                string repeat = Console.ReadLine().ToLower();
+                string userChoice = Console.ReadLine().ToLower();
 
-                if (repeat == "да")
+                if (userChoice == "да")
                     return true;
-                else if (repeat == "нет")
+                else if (userChoice == "нет")
                 {
                     Console.WriteLine("Завершение тестирования");
                     return false;
@@ -118,6 +157,34 @@ namespace GeniusIdiotConsoleApp
                     Console.WriteLine("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'");
                 }
             }
-        }        
+        }
+
+        private static void WriteToLog(string lastFirstMiddleName, int result, string diagnose)
+        {
+            using (StreamWriter sw = new StreamWriter(logPath, true, System.Text.Encoding.Default))
+            {
+                if (sw.BaseStream.Length == 0)
+                {
+                    sw.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-15}");
+                    sw.WriteLine(new string('-', 60));
+                }
+                sw.WriteLine($"{lastFirstMiddleName,-35} | {result}/{GetQuestionsAnswers().Length,-8} | {diagnose,-15}");
+            }
+        }
+
+        private static void OpenLog()
+        {
+            if (File.Exists(logPath))
+            {
+                using (StreamReader sr = new StreamReader(logPath))
+                {
+                    Console.WriteLine(sr.ReadToEnd());
+                }
+            }
+            else
+            {
+                Console.WriteLine("Журнал тестирования ещё не создан.");
+            }
+        }
     }
 }
