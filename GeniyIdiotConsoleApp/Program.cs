@@ -23,35 +23,31 @@ namespace GeniusIdiotConsoleApp
             string middleName = ConsoleHelper.IdentifyUser();
 
             var user = new User(lastName, firstName, middleName);
-            Random randomQuestion = new Random();
 
             while (repeatTest)
             {
-                int rightAnswers = 0;
-                int currentQuestion;
+                user.rightAnswers = 0;
                 int userAnswer;
-                string resultToLog;                
-                var copyQuestions = new List<Question>(QuestionsStorage.GetQuestions());
-                while (copyQuestions.Count > 0)
+                string resultToLog;
+                var Questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.GetQuestions());
+                for (int i = 0; i < Questions.Count; i++)
                 {
-                    currentQuestion = randomQuestion.Next(0, copyQuestions.Count);
-                    Console.WriteLine(copyQuestions[currentQuestion].Text);
+                    Console.WriteLine(Questions[i].Text);
                     userAnswer = ConsoleHelper.TryParseInt();
-                    if (userAnswer == copyQuestions[currentQuestion].Answer)
+                    if (userAnswer == Questions[i].Answer)
                     {
-                        rightAnswers++;
+                        user.rightAnswers++;
                     }
-                    copyQuestions.RemoveAt(currentQuestion);
                 }
-                Console.WriteLine($"Количество верных ответов: {rightAnswers}/{QuestionsStorage.GetQuestions().Count}");
-                Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(rightAnswers)}!");
+                Console.WriteLine($"Количество верных ответов: {user.rightAnswers}/{QuestionsStorage.GetQuestions().Count}");
+                Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.rightAnswers)}!");
                 repeatTest = ConsoleHelper.RepeatTest();
-                resultToLog = $"{user}#{rightAnswers}/{QuestionsStorage.GetQuestions().Count}#{UsersResultStorage.GetResult(rightAnswers)}";
-                LogManager.WriteToLog(resultToLog);
-                Console.WriteLine("Результат записан в журнал тестирования");
+                resultToLog = $"{user}#{user.rightAnswers}/{QuestionsStorage.GetQuestions().Count}#{UsersResultStorage.GetResult(user.rightAnswers)}";
+                FileManager.WriteToFile(resultToLog);
+                Console.WriteLine("Результат записан в журнал тестирования!");
             }
 
-            LogManager.ShowLog();
+            UsersResultStorage.ShowResult();
             Console.WriteLine("Выход из программы!");
         }
     }
