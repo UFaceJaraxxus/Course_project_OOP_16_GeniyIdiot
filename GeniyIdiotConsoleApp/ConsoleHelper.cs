@@ -2,7 +2,7 @@
 {
     public static class ConsoleHelper
     {
-        public static string IdentifyUser()
+        public static string ValidateName()
         {            
             while (true)
             {
