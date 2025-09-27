@@ -22,29 +22,7 @@
                     Console.WriteLine("Ошибка! Значение должно содержать только буквы");
                 }
             }
-        }
-        public static bool RepeatTest()
-        {
-            while (true)
-            {
-                Console.WriteLine("Вы желаете повторить тест? (да/нет)");
-                string userChoice = Console.ReadLine().ToLower();
-
-                if (userChoice == "да")
-                {
-                    return true;
-                }
-                else if (userChoice == "нет")
-                {
-                    Console.WriteLine("Завершение тестирования");
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'");
-                }
-            }
-        }
+        }        
         public static int TryParseInt()
         {
             while (true)
@@ -55,6 +33,19 @@
                     return number;
                 }
                 Console.WriteLine("Введено не число! Повторите попытку");
+            }
+        }
+
+        public static string CheckYesOrNot()
+        {
+            while (true)
+            {
+                string value = Console.ReadLine().ToLower();
+                if (value == "да" || value == "нет")
+                {
+                    return value;
+                }
+                Console.WriteLine("Некорректный ввод! Повторите попытку");
             }
         }
     }

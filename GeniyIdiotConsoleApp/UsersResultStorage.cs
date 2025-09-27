@@ -4,7 +4,7 @@
     {
         public static string GetResult(int rightAnswers)
         {
-            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.GetQuestions().Count;
+            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.CreateListQuestion().Count;
 
             switch (ratioRightAnswers)
             {
@@ -24,33 +24,14 @@
 
         public static void ShowResult()
         {
-            while (true)
+            IEnumerable<string> fileContent = FileManager.ReadFile("Журнал тестирования.txt");
+            Console.WriteLine("==================== Журнал тестирования ====================");
+            Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
+            Console.WriteLine(new string('-', 61));
+            foreach (string line in fileContent)
             {
-                Console.WriteLine("Открыть журнал тестирования? (да/нет)");
-
-                string userChoice = Console.ReadLine().ToLower();
-
-                if (userChoice == "да")
-                {
-                    IEnumerable<string> fileContent = FileManager.ReadFile();
-                    Console.WriteLine("==================== Журнал тестирования ====================");
-                    Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
-                    Console.WriteLine(new string('-', 61));
-                    foreach (string line in fileContent)
-                    {
-                        string[] currentLine = line.Split('#');
-                        Console.WriteLine($"{currentLine[0],-35} | {currentLine[1],-10} | {currentLine[2],-11}");
-                    }
-                    return;
-                }
-                else if (userChoice == "нет")
-                {
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите 'да' или 'нет'");
-                }
+                string[] currentLine = line.Split('#');
+                Console.WriteLine($"{currentLine[0],-35} | {currentLine[1],-10} | {currentLine[2],-11}");
             }
         }
     }

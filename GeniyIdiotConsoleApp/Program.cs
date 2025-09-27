@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeniyIdiotConsoleApp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace GeniusIdiotConsoleApp
     {
         public static void Main(string[] args)
         {
-            bool repeatTest = true;
-
             Console.WriteLine("Введите фамилию:");
             string lastName = ConsoleHelper.ValidateName();
 
@@ -24,31 +23,75 @@ namespace GeniusIdiotConsoleApp
 
             var user = new User(lastName, firstName, middleName);
 
-            while (repeatTest)
+            while (true)
             {
-                user.RightAnswers = 0;
-                int userAnswer;
-                string resultToLog;
-                var Questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.GetQuestions());
-                for (int i = 0; i < Questions.Count; i++)
+                Menu.OpenMenu();
+                int userChoice = ConsoleHelper.TryParseInt();
+                switch (userChoice)
                 {
-                    Console.WriteLine(Questions[i].Text);
-                    userAnswer = ConsoleHelper.TryParseInt();
-                    if (userAnswer == Questions[i].Answer)
-                    {
-                        user.RightAnswers++;
-                    }
+                    case 1:
+                        user.RightAnswers = 0;
+                        int userAnswer;
+                        string resultToLog;
+                        var questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.CreateListQuestion());
+                        for (int i = 0; i < questions.Count; i++)
+                        {
+                            Console.WriteLine(questions[i].Text);
+                            userAnswer = ConsoleHelper.TryParseInt();
+                            if (userAnswer == questions[i].Answer)
+                            {
+                                user.RightAnswers++;
+                            }
+                        }
+                        Console.WriteLine($"Количество верных ответов: {user.RightAnswers}/{questions.Count}");
+                        Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.RightAnswers)}!");
+                        resultToLog = $"{user}#{user.RightAnswers}/{questions.Count}#{UsersResultStorage.GetResult(user.RightAnswers)}";
+                        FileManager.WriteToFile(resultToLog, "Журнал тестирования.txt");
+                        Console.WriteLine("Результат записан в журнал тестирования!");
+                        break;
+                    case 2:
+                        UsersResultStorage.ShowResult();
+                        break;
+                    case 3:
+                        Console.WriteLine("Введите пароль:");
+                        if (Console.ReadLine() == "пароль")
+                        {                            
+                            while (true)
+                            {
+                                Menu.OpenAdminMenu();
+                                int adminChoice = ConsoleHelper.TryParseInt();
+                                switch (adminChoice)
+                                {
+                                    case 1:
+                                        QuestionsStorage.AddQuestion();
+                                        break;
+                                    case 2:
+                                        FileManager.ShowAll("Список вопросов.txt");
+                                        break;
+                                    case 3:
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Пароль неверный. Возврат к меню");
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("Завершение работы программы!");
+                        return;
                 }
-                Console.WriteLine($"Количество верных ответов: {user.RightAnswers}/{QuestionsStorage.GetQuestions().Count}");
-                Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.RightAnswers)}!");
-                repeatTest = ConsoleHelper.RepeatTest();
-                resultToLog = $"{user}#{user.RightAnswers}/{QuestionsStorage.GetQuestions().Count}#{UsersResultStorage.GetResult(user.RightAnswers)}";
-                FileManager.WriteToFile(resultToLog);
-                Console.WriteLine("Результат записан в журнал тестирования!");
             }
 
-            UsersResultStorage.ShowResult();
-            Console.WriteLine("Выход из программы!");
+
+
+
+
+
+            
+            
+            
         }
     }
 }
