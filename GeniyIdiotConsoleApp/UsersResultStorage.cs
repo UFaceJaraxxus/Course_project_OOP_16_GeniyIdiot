@@ -4,7 +4,7 @@
     {
         public static string GetResult(int rightAnswers)
         {
-            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.CreateListQuestion().Count;
+            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.CreateQuestionList().Count;
 
             switch (ratioRightAnswers)
             {

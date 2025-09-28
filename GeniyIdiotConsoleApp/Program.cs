@@ -33,7 +33,7 @@ namespace GeniusIdiotConsoleApp
                         user.RightAnswers = 0;
                         int userAnswer;
                         string resultToLog;
-                        var questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.CreateListQuestion());
+                        var questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.CreateQuestionList());
                         for (int i = 0; i < questions.Count; i++)
                         {
                             Console.WriteLine(questions[i].Text);
@@ -55,8 +55,9 @@ namespace GeniusIdiotConsoleApp
                     case 3:
                         Console.WriteLine("Введите пароль:");
                         if (Console.ReadLine() == "пароль")
-                        {                            
-                            while (true)
+                        {
+                            bool isAdminMenu = true;
+                            while (isAdminMenu)
                             {
                                 Menu.OpenAdminMenu();
                                 int adminChoice = ConsoleHelper.TryParseInt();
@@ -69,6 +70,7 @@ namespace GeniusIdiotConsoleApp
                                         FileManager.ShowAll("Список вопросов.txt");
                                         break;
                                     case 3:
+                                        isAdminMenu = false;
                                         break;
                                 }
                             }
