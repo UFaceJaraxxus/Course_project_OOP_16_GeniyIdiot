@@ -66,9 +66,12 @@ namespace GeniusIdiotConsoleApp
                                         QuestionsStorage.AddQuestion();
                                         break;
                                     case 2:
-                                        FileManager.ShowAll("Список вопросов.txt");
+                                        QuestionsStorage.ShowQuestionList();
                                         break;
                                     case 3:
+                                        QuestionsStorage.DeleteQuestion();
+                                        break;
+                                    case 4:
                                         break;
                                 }
                             }

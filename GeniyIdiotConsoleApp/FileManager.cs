@@ -2,12 +2,17 @@
 {
     class FileManager
     {
-        public static void WriteToFile(string result, string path)
+        public static void WriteToFile(string value, string path)
         {
             using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
             {
-                sw.WriteLine(result);
+                sw.WriteLine(value);
             }
+        }
+
+        public static void WriteAllFile(IEnumerable<string> lines, string path)
+        {
+            File.WriteAllLines(path, lines, System.Text.Encoding.Default);
         }
 
         public static IEnumerable<string> ReadFile(string path)
@@ -22,16 +27,6 @@
                 Console.WriteLine("Файл не найден!");
             }
             return Enumerable.Empty<string>();
-        }
-
-        public static void ShowAll(string path)
-        {
-            IEnumerable<string> lines = FileManager.ReadFile(path);
-
-            foreach (string line in lines)
-            {
-                Console.WriteLine(line);
-            }
         }
     }
 }

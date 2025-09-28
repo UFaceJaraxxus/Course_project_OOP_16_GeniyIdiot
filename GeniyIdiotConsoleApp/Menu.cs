@@ -19,12 +19,13 @@ namespace GeniyIdiotConsoleApp
             Console.WriteLine("4 - Выйти из программы");
         }
         public static void OpenAdminMenu()
-        {
+        {            
             Console.WriteLine("==================== Меню разработчика ====================");
             Console.WriteLine("Выберите действие:");
             Console.WriteLine("1 - Добавить вопрос");
             Console.WriteLine("2 - Открыть список вопросов");
-            Console.WriteLine("3 - Выйти в предыдущее меню");
+            Console.WriteLine("3 - Удалить вопрос");
+            Console.WriteLine("4 - Выйти в предыдущее меню");
         }
     }
 }

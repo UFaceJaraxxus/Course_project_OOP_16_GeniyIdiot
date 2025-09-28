@@ -91,5 +91,46 @@ namespace GeniusIdiotConsoleApp
                 }
             }            
         }
+
+        public static void ShowQuestionList()
+        {
+            IEnumerable<string> fileContent = FileManager.ReadFile("Список вопросов.txt");
+            int countQuestion = 1;
+            Console.WriteLine("--------------------- Список вопросов ---------------------");
+            foreach (string line in fileContent)
+            {
+                Console.Write($"{countQuestion}. {line}");
+                Console.WriteLine();
+                countQuestion++;
+            }
+        }
+
+        public static void DeleteQuestion()
+        {
+            bool repeatDeleteQuestion = true;            
+            while (true)
+            {
+                ShowQuestionList();
+                Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
+                int questionNumber = ConsoleHelper.TryParseInt();
+
+                var lines = FileManager.ReadFile("Список вопросов.txt").ToList();
+                lines.RemoveAt(questionNumber - 1);
+                FileManager.WriteAllFile(lines, "Список вопросов.txt");
+
+                Console.WriteLine("Вопрос удалён.");
+
+                Console.WriteLine("Удалить ещё вопрос? (да/нет)");
+                string userChoice = ConsoleHelper.CheckYesOrNot();
+                if (userChoice == "да")
+                {
+                    repeatDeleteQuestion = true;
+                }
+                else
+                {
+                    repeatDeleteQuestion = false;
+                }
+            }            
+        }
     }
 }
