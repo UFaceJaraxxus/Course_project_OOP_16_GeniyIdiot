@@ -4,7 +4,7 @@ namespace GeniusIdiotConsoleApp
 {
     class QuestionsStorage
     {
-        public static List<Question> CreateListQuestion()
+        public static List<Question> CreateQuestionList()
         {
             if (!File.Exists("Список вопросов.txt") || new FileInfo("Список вопросов.txt").Length == 0)
             {
