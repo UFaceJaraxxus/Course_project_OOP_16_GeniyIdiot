@@ -89,7 +89,7 @@ namespace GeniusIdiotConsoleApp
                 {
                     repeatAddQuestion = false;
                 }
-            }            
+            }
         }
 
         public static void ShowQuestionList()
@@ -108,7 +108,7 @@ namespace GeniusIdiotConsoleApp
         public static void DeleteQuestion()
         {
             bool repeatDeleteQuestion = true;            
-            while (true)
+            while (repeatDeleteQuestion)
             {
                 ShowQuestionList();
                 Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
