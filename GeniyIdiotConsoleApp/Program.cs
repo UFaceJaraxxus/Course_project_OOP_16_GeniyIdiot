@@ -33,7 +33,7 @@ namespace GeniusIdiotConsoleApp
                         user.RightAnswers = 0;
                         int userAnswer;
                         string resultToLog;
-                        var questions = QuestionsStorage.ShuffleQuestions(QuestionsStorage.CreateQuestionList());
+                        var questions = QuestionsStorage.Shuffle(QuestionsStorage.GetAll());
                         for (int i = 0; i < questions.Count; i++)
                         {
                             Console.WriteLine(questions[i].Text);
@@ -46,11 +46,11 @@ namespace GeniusIdiotConsoleApp
                         Console.WriteLine($"Количество верных ответов: {user.RightAnswers}/{questions.Count}");
                         Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.RightAnswers)}!");
                         resultToLog = $"{user}#{user.RightAnswers}/{questions.Count}#{UsersResultStorage.GetResult(user.RightAnswers)}";
-                        FileManager.WriteToFile(resultToLog, "Журнал тестирования.txt");
+                        FileManager.Write(resultToLog, "Журнал тестирования.txt");
                         Console.WriteLine("Результат записан в журнал тестирования!");
                         break;
                     case 2:
-                        UsersResultStorage.ShowResult();
+                        UsersResultStorage.PrintLog();
                         break;
                     case 3:
                         Console.WriteLine("Введите пароль:");
@@ -64,13 +64,13 @@ namespace GeniusIdiotConsoleApp
                                 switch (adminChoice)
                                 {
                                     case 1:
-                                        QuestionsStorage.AddQuestion();
+                                        QuestionsStorage.AddOne();
                                         break;
                                     case 2:
-                                        QuestionsStorage.ShowQuestionList();
+                                        QuestionsStorage.PrintAll();
                                         break;
                                     case 3:
-                                        QuestionsStorage.DeleteQuestion();
+                                        QuestionsStorage.DeleteOne();
                                         break;
                                     case 4:
                                         isAdminMenu = false;

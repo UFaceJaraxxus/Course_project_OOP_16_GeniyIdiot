@@ -4,14 +4,14 @@ namespace GeniusIdiotConsoleApp
 {
     class QuestionsStorage
     {
-        public static List<Question> CreateQuestionList()
+        public static List<Question> GetAll()
         {
             if (!File.Exists("Список вопросов.txt") || new FileInfo("Список вопросов.txt").Length == 0)
             {
-                UploadDefaultQuestions();
+                SeedDefaults();
             }
             List<Question> questions = new List<Question>();
-            IEnumerable<string> fileContent = FileManager.ReadFile("Список вопросов.txt");
+            IEnumerable<string> fileContent = FileManager.ReadAllLines("Список вопросов.txt");
             foreach (string line in fileContent)
             {
                 string[] currentLine = line.Split('#');
@@ -20,7 +20,7 @@ namespace GeniusIdiotConsoleApp
             return questions;
         }
 
-        public static List<Question> UploadDefaultQuestions()
+        public static List<Question> SeedDefaults()
         {
             var questions = new List<Question>()
             {
@@ -34,12 +34,12 @@ namespace GeniusIdiotConsoleApp
             for (int i = 0; i < questions.Count; i++)
             {
                 string currentQuestion = $"{questions[i].Text}#{questions[i].Answer}";
-                FileManager.WriteToFile(currentQuestion, "Список вопросов.txt");
+                FileManager.Write(currentQuestion, "Список вопросов.txt");
             }
             return questions;
         }
 
-        public static List<Question> ShuffleQuestions(List<Question> questions)
+        public static List<Question> Shuffle(List<Question> questions)
         {
             Random randomQuestion = new Random();
             for (int i = questions.Count - 1; i > 0; i--)
@@ -50,7 +50,7 @@ namespace GeniusIdiotConsoleApp
             return questions;
         }
 
-        public static void AddQuestion()
+        public static void AddOne()
         {
             bool repeatAddQuestion = true;
             while (repeatAddQuestion)
@@ -63,7 +63,7 @@ namespace GeniusIdiotConsoleApp
 
                 string newQuestion = $"{newTextQuestion}#{newAnswerQuestion}";
 
-                IEnumerable<string> fileContent = FileManager.ReadFile("Список вопросов.txt");
+                IEnumerable<string> fileContent = FileManager.ReadAllLines("Список вопросов.txt");
                 foreach (string file in fileContent)
                 {
                     if (newQuestion.ToLower().Equals(file.ToLower()))
@@ -92,31 +92,18 @@ namespace GeniusIdiotConsoleApp
             }
         }
 
-        public static void ShowQuestionList()
+        public static void DeleteOne()
         {
-            IEnumerable<string> fileContent = FileManager.ReadFile("Список вопросов.txt");
-            int countQuestion = 1;
-            Console.WriteLine("--------------------- Список вопросов ---------------------");
-            foreach (string line in fileContent)
-            {
-                Console.Write($"{countQuestion}. {line}");
-                Console.WriteLine();
-                countQuestion++;
-            }
-        }
-
-        public static void DeleteQuestion()
-        {
-            bool repeatDeleteQuestion = true;            
+            bool repeatDeleteQuestion = true;
             while (repeatDeleteQuestion)
             {
-                ShowQuestionList();
+                PrintAll();
                 Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
                 int questionNumber = ConsoleHelper.TryParseInt();
 
-                var lines = FileManager.ReadFile("Список вопросов.txt").ToList();
+                var lines = FileManager.ReadAllLines("Список вопросов.txt").ToList();
                 lines.RemoveAt(questionNumber - 1);
-                FileManager.WriteAllFile(lines, "Список вопросов.txt");
+                FileManager.WriteAllLines(lines, "Список вопросов.txt");
 
                 Console.WriteLine("Вопрос удалён.");
 
@@ -130,7 +117,20 @@ namespace GeniusIdiotConsoleApp
                 {
                     repeatDeleteQuestion = false;
                 }
-            }            
+            }
         }
+
+        public static void PrintAll()
+        {
+            IEnumerable<string> fileContent = FileManager.ReadAllLines("Список вопросов.txt");
+            int countQuestion = 1;
+            Console.WriteLine("--------------------- Список вопросов ---------------------");
+            foreach (string line in fileContent)
+            {
+                Console.Write($"{countQuestion}. {line}");
+                Console.WriteLine();
+                countQuestion++;
+            }
+        }        
     }
 }

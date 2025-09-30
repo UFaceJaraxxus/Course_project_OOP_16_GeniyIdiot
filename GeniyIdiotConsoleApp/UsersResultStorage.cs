@@ -4,7 +4,7 @@
     {
         public static string GetResult(int rightAnswers)
         {
-            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.CreateQuestionList().Count;
+            int ratioRightAnswers = (rightAnswers * 100) / QuestionsStorage.GetAll().Count;
 
             switch (ratioRightAnswers)
             {
@@ -22,9 +22,9 @@
             return "идиот";
         }
 
-        public static void ShowResult()
+        public static void PrintLog()
         {
-            IEnumerable<string> fileContent = FileManager.ReadFile("Журнал тестирования.txt");
+            IEnumerable<string> fileContent = FileManager.ReadAllLines("Журнал тестирования.txt");
             Console.WriteLine("==================== Журнал тестирования ====================");
             Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
             Console.WriteLine(new string('-', 61));

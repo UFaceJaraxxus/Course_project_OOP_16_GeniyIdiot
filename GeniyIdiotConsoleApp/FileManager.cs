@@ -2,7 +2,7 @@
 {
     class FileManager
     {
-        public static void WriteToFile(string value, string path)
+        public static void Write(string value, string path)
         {
             using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
             {
@@ -10,12 +10,12 @@
             }
         }
 
-        public static void WriteAllFile(IEnumerable<string> lines, string path)
+        public static void WriteAllLines(IEnumerable<string> lines, string path)
         {
             File.WriteAllLines(path, lines, System.Text.Encoding.Default);
         }
 
-        public static IEnumerable<string> ReadFile(string path)
+        public static IEnumerable<string> ReadAllLines(string path)
         {
             try
             {
