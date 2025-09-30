@@ -85,15 +85,6 @@ namespace GeniusIdiotConsoleApp
                         return;
                 }
             }
-
-
-
-
-
-
-            
-            
-            
         }
     }
 }
