@@ -1,6 +1,6 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿namespace GeniyIdiot.Common
 {
-    class Question
+    public class Question
     {
         public string Text {  get; set; }
         public int Answer { get; set; }

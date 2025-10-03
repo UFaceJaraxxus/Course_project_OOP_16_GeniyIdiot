@@ -1,11 +1,10 @@
-﻿using GeniusIdiotConsoleApp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeniyIdiotConsoleApp
+namespace GeniyIdiot.ConsoleApp
 {
     class Menu
     {
@@ -25,7 +24,7 @@ namespace GeniyIdiotConsoleApp
             Console.WriteLine("1 - Добавить вопрос");
             Console.WriteLine("2 - Открыть список вопросов");
             Console.WriteLine("3 - Удалить вопрос");
-            Console.WriteLine("4 - Выйти в предыдущее меню");
+            Console.WriteLine("4 - Вернуться в главное меню");
         }
     }
 }

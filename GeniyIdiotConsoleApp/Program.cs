@@ -1,4 +1,4 @@
-﻿using GeniyIdiotConsoleApp;
+﻿using GeniyIdiot.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,38 +6,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeniusIdiotConsoleApp
+namespace GeniyIdiot.ConsoleApp
 {
     internal class Program
     {
+        private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.txt");
         public static void Main(string[] args)
         {
-            Console.WriteLine("Введите фамилию:");
-            string lastName = ConsoleHelper.ValidateName();
-
-            Console.WriteLine("Введите имя:");
-            string firstName = ConsoleHelper.ValidateName();
-
-            Console.WriteLine("Введите отчество:");
-            string middleName = ConsoleHelper.ValidateName();
-
-            var user = new User(lastName, firstName, middleName);
-
             while (true)
             {
                 Menu.OpenMenu();
-                int userChoice = ConsoleHelper.TryParseInt();
+                int userChoice = ConsoleHelper.SetNumber();
                 switch (userChoice)
                 {
                     case 1:
+                        Console.WriteLine("Введите фамилию:");
+                        string lastName = ConsoleHelper.SetName();
+
+                        Console.WriteLine("Введите имя:");
+                        string firstName = ConsoleHelper.SetName();
+
+                        Console.WriteLine("Введите отчество:");
+                        string middleName = ConsoleHelper.SetName();
+
+                        var user = new User(lastName, firstName, middleName);
+
                         user.RightAnswers = 0;
                         int userAnswer;
                         string resultToLog;
-                        var questions = QuestionsStorage.Shuffle(QuestionsStorage.GetAll());
+                        var questions = GeniyIdiot.Common.QuestionsStorage.Shuffle(GeniyIdiot.Common.QuestionsStorage.GetAll());
                         for (int i = 0; i < questions.Count; i++)
                         {
                             Console.WriteLine(questions[i].Text);
-                            userAnswer = ConsoleHelper.TryParseInt();
+                            userAnswer = ConsoleHelper.SetNumber();
                             if (userAnswer == questions[i].Answer)
                             {
                                 user.RightAnswers++;
@@ -46,11 +47,11 @@ namespace GeniusIdiotConsoleApp
                         Console.WriteLine($"Количество верных ответов: {user.RightAnswers}/{questions.Count}");
                         Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.RightAnswers)}!");
                         resultToLog = $"{user}#{user.RightAnswers}/{questions.Count}#{UsersResultStorage.GetResult(user.RightAnswers)}";
-                        FileManager.Write(resultToLog, "Журнал тестирования.txt");
+                        FileManager.Write(resultToLog, _logPath);
                         Console.WriteLine("Результат записан в журнал тестирования!");
                         break;
                     case 2:
-                        UsersResultStorage.PrintLog();
+                        PrintLog();
                         break;
                     case 3:
                         Console.WriteLine("Введите пароль:");
@@ -60,7 +61,7 @@ namespace GeniusIdiotConsoleApp
                             while (isAdminMenu)
                             {
                                 Menu.OpenAdminMenu();
-                                int adminChoice = ConsoleHelper.TryParseInt();
+                                int adminChoice = ConsoleHelper.SetNumber();
                                 switch (adminChoice)
                                 {
                                     case 1:
@@ -88,6 +89,19 @@ namespace GeniusIdiotConsoleApp
                         return;
                 }
             } 
+        }
+
+        public static void PrintLog()
+        {
+            IEnumerable<string> fileContent = FileManager.ReadAllLines(_logPath);
+            Console.WriteLine("==================== Журнал тестирования ====================");
+            Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
+            Console.WriteLine(new string('-', 61));
+            foreach (string line in fileContent)
+            {
+                string[] currentLine = line.Split('#');
+                Console.WriteLine($"{currentLine[0],-35} | {currentLine[1],-10} | {currentLine[2],-11}");
+            }
         }
     }
 }

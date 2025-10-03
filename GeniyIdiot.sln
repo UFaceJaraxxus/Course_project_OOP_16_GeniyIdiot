@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniyIdiotConsoleApp", "GeniyIdiotConsoleApp\GeniyIdiotConsoleApp.csproj", "{D13A3519-FFB4-4DE5-85A1-480472933F88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniyIdiot.ConsoleApp", "GeniyIdiotConsoleApp\GeniyIdiot.ConsoleApp.csproj", "{D13A3519-FFB4-4DE5-85A1-480472933F88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniyIdiot.Common", "GeniyIdiotConsoleApp.Common\GeniyIdiot.Common.csproj", "{3D5EE7A1-7E92-4B21-83E7-FB0BFCDEDFD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeniyIdiot.WindowsForm", "GeniyIdiot.WindowsForm\GeniyIdiot.WindowsForm.csproj", "{51F84D36-BB5F-4A16-8A55-22EF443E804F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D13A3519-FFB4-4DE5-85A1-480472933F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D13A3519-FFB4-4DE5-85A1-480472933F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D13A3519-FFB4-4DE5-85A1-480472933F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D5EE7A1-7E92-4B21-83E7-FB0BFCDEDFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D5EE7A1-7E92-4B21-83E7-FB0BFCDEDFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D5EE7A1-7E92-4B21-83E7-FB0BFCDEDFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D5EE7A1-7E92-4B21-83E7-FB0BFCDEDFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F84D36-BB5F-4A16-8A55-22EF443E804F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F84D36-BB5F-4A16-8A55-22EF443E804F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F84D36-BB5F-4A16-8A55-22EF443E804F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F84D36-BB5F-4A16-8A55-22EF443E804F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

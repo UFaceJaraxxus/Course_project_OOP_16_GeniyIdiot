@@ -1,41 +1,13 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GeniyIdiot.ConsoleApp
 {
-    public static class ConsoleHelper
+    internal class ConsoleHelper
     {
-        public static string ValidateName()
-        {            
-            while (true)
-            {
-                string inputUser = Console.ReadLine().ToLower();
-                if (!string.IsNullOrEmpty(inputUser) && inputUser.All(char.IsLetter))
-                {
-                    string userValue = inputUser[0].ToString().ToUpper();
-
-                    for (int i = 1; i < inputUser.Length; i++)
-                    {
-                        userValue = userValue + inputUser[i];
-                    }
-                    return userValue;
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка! Значение должно содержать только буквы");
-                }
-            }
-        }        
-        public static int TryParseInt()
-        {
-            while (true)
-            {
-                string value = Console.ReadLine();
-                if (int.TryParse(value, out int number))
-                {
-                    return number;
-                }
-                Console.WriteLine("Введено не число! Повторите попытку");
-            }
-        }
-
         public static string CheckYesOrNot()
         {
             while (true)
@@ -47,6 +19,38 @@
                 }
                 Console.WriteLine("Некорректный ввод! Повторите попытку");
             }
+        }
+
+        public static string SetName()
+        {
+            (bool success, string value) name;
+            
+            do
+            {
+                name = GeniyIdiot.Common.Validator.ValidateName(Console.ReadLine());
+                if (name.success == false)
+                {
+                    Console.WriteLine("Некорректный ввод! Повторите попытку");
+                }
+            }
+            while (name.success == false);
+            return name.value;
+        }
+
+        public static int SetNumber()
+        {
+            (bool success, int value) number;
+
+            do
+            {
+                number = GeniyIdiot.Common.Validator.TryParseNumber(Console.ReadLine());
+                if (number.success == false)
+                {
+                    Console.WriteLine("Некорректный ввод! Повторите попытку");
+                }
+            }
+            while (number.success == false);
+            return number.value;
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace GeniusIdiotConsoleApp
+﻿namespace GeniyIdiot.Common
 {
-    class FileManager
+    public class FileManager
     {
         public static void Write(string value, string path)
         {
