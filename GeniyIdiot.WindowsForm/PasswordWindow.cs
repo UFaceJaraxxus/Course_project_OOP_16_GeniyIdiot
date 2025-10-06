@@ -19,6 +19,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -26,17 +27,13 @@ namespace GeniyIdiot.WindowsForm
         {
             if (passwordTextBox.Text == "пароль")
             {
-                using (var adminMenuForm = new AdminMenu())
-                {
-                    adminMenuForm.ShowDialog();
-                    this.Close();
-                    return;
-                }                
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Неверный пароль");
-                this.Close();
+                passwordTextBox.Clear();
             }
         }
     }

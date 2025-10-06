@@ -23,14 +23,14 @@ namespace GeniyIdiot.ConsoleApp
 
         public static string SetName()
         {
-            (bool success, string value) name;
+            (bool success, string value, string errorMessage) name;
             
             do
             {
                 name = GeniyIdiot.Common.Validator.ValidateName(Console.ReadLine());
                 if (name.success == false)
                 {
-                    Console.WriteLine("Некорректный ввод! Повторите попытку");
+                    Console.WriteLine(name.errorMessage);
                 }
             }
             while (name.success == false);

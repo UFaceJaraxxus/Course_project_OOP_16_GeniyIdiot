@@ -34,7 +34,15 @@ namespace GeniyIdiot.WindowsForm
             this.Hide();
             using (var passwordForm = new PasswordWindow())
             {
-                passwordForm.ShowDialog();
+                var result = passwordForm.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    using (var adminMenuForm = new AdminMenu())
+                    {
+                        adminMenuForm.ShowDialog();
+                    }
+                }
             }
             this.Show();
         }

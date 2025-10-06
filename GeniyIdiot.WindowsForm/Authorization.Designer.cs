@@ -54,6 +54,7 @@
             lastNameTextBox.Name = "lastNameTextBox";
             lastNameTextBox.Size = new Size(188, 29);
             lastNameTextBox.TabIndex = 1;
+            lastNameTextBox.Leave += LastNameTextBox_Leave;
             // 
             // firstNameTextBox
             // 
@@ -62,6 +63,7 @@
             firstNameTextBox.Name = "firstNameTextBox";
             firstNameTextBox.Size = new Size(188, 29);
             firstNameTextBox.TabIndex = 3;
+            firstNameTextBox.Leave += FirstNameTextBox_Leave;
             // 
             // firstNameLabel
             // 
@@ -80,6 +82,7 @@
             middleNameTextBox.Name = "middleNameTextBox";
             middleNameTextBox.Size = new Size(188, 29);
             middleNameTextBox.TabIndex = 5;
+            middleNameTextBox.Leave += MiddleNameTextBox_Leave;
             // 
             // middleNameLabel
             // 

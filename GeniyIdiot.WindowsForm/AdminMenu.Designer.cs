@@ -65,7 +65,7 @@
             returnToMaiMenuButton.TabIndex = 7;
             returnToMaiMenuButton.Text = "Вернуться в главное меню";
             returnToMaiMenuButton.UseVisualStyleBackColor = true;
-            returnToMaiMenuButton.Click += returnToMaiMenuButton_Click;
+            returnToMaiMenuButton.Click += returnToMainMenuButton_Click;
             // 
             // AdminMenu
             // 

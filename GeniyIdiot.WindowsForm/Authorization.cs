@@ -19,28 +19,47 @@ namespace GeniyIdiot.WindowsForm
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            GeniyIdiot.Common.User user;
+            var user = new GeniyIdiot.Common.User(lastNameTextBox.Text, firstNameTextBox.Text, middleNameTextBox.Text);
 
-            (bool success, string value) lastName = GeniyIdiot.Common.Validator.ValidateName(lastNameTextBox.Text.Trim());
-            (bool success, string value) firstName = GeniyIdiot.Common.Validator.ValidateName(firstNameTextBox.Text.Trim());
-            (bool success, string value) middleName = GeniyIdiot.Common.Validator.ValidateName(middleNameTextBox.Text.Trim());
-            if (lastName.success == true && firstName.success == true && middleName.success == true)
+            this.Hide();
+            using (var testForm = new Testing(user))
             {
-                user = new GeniyIdiot.Common.User(lastName.value, firstName.value, middleName.value);
-
-                this.Hide();
-
-                using (var testForm = new Testing(user))
-                {
-                    testForm.ShowDialog();
-                }
-
-                this.Close();
+                testForm.ShowDialog();
             }
-            else
+            this.Close();
+        }
+
+        private void LastNameTextBox_Leave(object sender, EventArgs e)
+        {
+            (bool success, string value, string errorMessage) lastName = GeniyIdiot.Common.Validator.ValidateName(lastNameTextBox.Text.Trim());
+
+            if (!lastName.success)
             {
-                MessageBox.Show("Некорректный ввод! Повторите попытку");
+                MessageBox.Show(lastName.errorMessage);
+                lastNameTextBox.Focus();
             }
-        }            
+        }
+
+        private void FirstNameTextBox_Leave(object sender, EventArgs e)
+        {
+            (bool success, string value, string errorMessage) firstName = GeniyIdiot.Common.Validator.ValidateName(firstNameTextBox.Text.Trim());
+
+            if (!firstName.success)
+            {
+                MessageBox.Show(firstName.errorMessage);
+                firstNameTextBox.Focus();
+            }
+        }
+
+        private void MiddleNameTextBox_Leave(object sender, EventArgs e)
+        {
+            (bool success, string value, string errorMessage) middleName = GeniyIdiot.Common.Validator.ValidateName(middleNameTextBox.Text.Trim());
+
+            if (!middleName.success)
+            {
+                MessageBox.Show(middleName.errorMessage);
+                middleNameTextBox.Focus();
+            }
+        }
     }
 }
