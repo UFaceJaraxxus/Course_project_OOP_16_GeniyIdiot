@@ -17,10 +17,6 @@ namespace GeniyIdiot.WindowsForm
         public TestLog()
         {
             InitializeComponent();
-
-            testLogDataGridView.Columns.Add("lastName firstName middleName", "Фамилия Имя Отчество");
-            testLogDataGridView.Columns.Add("Score", "Баллы");
-            testLogDataGridView.Columns.Add("Result", "Результат");
         }
 
         private void testLogForm_Load(object sender, EventArgs e)

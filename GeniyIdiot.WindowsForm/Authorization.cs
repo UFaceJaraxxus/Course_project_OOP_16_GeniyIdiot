@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GeniyIdiot.Common;
 
 namespace GeniyIdiot.WindowsForm
 {
@@ -19,7 +20,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            var user = new GeniyIdiot.Common.User(lastNameTextBox.Text, firstNameTextBox.Text, middleNameTextBox.Text);
+            var user = new User(lastNameTextBox.Text, firstNameTextBox.Text, middleNameTextBox.Text);
 
             this.Hide();
             using (var testForm = new Testing(user))
@@ -31,7 +32,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void LastNameTextBox_Leave(object sender, EventArgs e)
         {
-            (bool success, string value, string errorMessage) lastName = GeniyIdiot.Common.Validator.ValidateName(lastNameTextBox.Text.Trim());
+            (bool success, string value, string errorMessage) lastName = Validator.ValidateName(lastNameTextBox.Text.Trim());
 
             if (!lastName.success)
             {
@@ -42,7 +43,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void FirstNameTextBox_Leave(object sender, EventArgs e)
         {
-            (bool success, string value, string errorMessage) firstName = GeniyIdiot.Common.Validator.ValidateName(firstNameTextBox.Text.Trim());
+            (bool success, string value, string errorMessage) firstName = Validator.ValidateName(firstNameTextBox.Text.Trim());
 
             if (!firstName.success)
             {
@@ -53,7 +54,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void MiddleNameTextBox_Leave(object sender, EventArgs e)
         {
-            (bool success, string value, string errorMessage) middleName = GeniyIdiot.Common.Validator.ValidateName(middleNameTextBox.Text.Trim());
+            (bool success, string value, string errorMessage) middleName = Validator.ValidateName(middleNameTextBox.Text.Trim());
 
             if (!middleName.success)
             {

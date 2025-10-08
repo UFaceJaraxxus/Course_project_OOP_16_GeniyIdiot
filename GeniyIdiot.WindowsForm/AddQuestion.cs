@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GeniyIdiot.Common;
 
 namespace GeniyIdiot.WindowsForm
 {
@@ -27,7 +28,7 @@ namespace GeniyIdiot.WindowsForm
         {
             string newQuestion = newQuestionTextBox.Text.Trim();
             
-            (bool success, int value) result = GeniyIdiot.Common.Validator.TryParseNumber(newAnswerTextBox.Text.Trim());
+            (bool success, int value) result = Validator.TryParseNumber(newAnswerTextBox.Text.Trim());
 
             if (newQuestion == string.Empty || newAnswerTextBox.Text == string.Empty || result.success == false)
             {
@@ -41,7 +42,7 @@ namespace GeniyIdiot.WindowsForm
 
             string newQuestionAndAnswer = newQuestion + "#" + newAnswer;            
 
-            GeniyIdiot.Common.FileManager.Write(newQuestionAndAnswer, _questionListPath);
+            FileManager.Write(newQuestionAndAnswer, _questionListPath);
             MessageBox.Show("Вопрос добавлен");
 
             newQuestionTextBox.Clear();

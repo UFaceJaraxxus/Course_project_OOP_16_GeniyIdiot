@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeniyIdiot.Common;
 
 namespace GeniyIdiot.ConsoleApp
 {
@@ -27,7 +28,7 @@ namespace GeniyIdiot.ConsoleApp
             
             do
             {
-                name = GeniyIdiot.Common.Validator.ValidateName(Console.ReadLine());
+                name = Validator.ValidateName(Console.ReadLine());
                 if (name.success == false)
                 {
                     Console.WriteLine(name.errorMessage);
@@ -43,7 +44,7 @@ namespace GeniyIdiot.ConsoleApp
 
             do
             {
-                number = GeniyIdiot.Common.Validator.TryParseNumber(Console.ReadLine());
+                number = Validator.TryParseNumber(Console.ReadLine());
                 if (number.success == false)
                 {
                     Console.WriteLine("Некорректный ввод! Повторите попытку");

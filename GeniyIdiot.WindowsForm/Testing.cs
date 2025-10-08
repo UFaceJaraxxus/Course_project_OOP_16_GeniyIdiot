@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,12 +15,12 @@ namespace GeniyIdiot.WindowsForm
     {
         private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.txt");
         private List<Question> questions;
-        private GeniyIdiot.Common.User user;
+        private User user;
         int countQuestionList = 0;
         private int questionNumber = 1;
         private string resultToLog;
 
-        public Testing(GeniyIdiot.Common.User user)
+        public Testing(User user)
         {
             InitializeComponent();
             this.user = user;
@@ -35,7 +34,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            (bool success, int value) userAnswer = GeniyIdiot.Common.Validator.TryParseNumber(userAnswerTextBox.Text.Trim());
+            (bool success, int value) userAnswer = Validator.TryParseNumber(userAnswerTextBox.Text.Trim());
 
             if (userAnswer.success == false)
             {

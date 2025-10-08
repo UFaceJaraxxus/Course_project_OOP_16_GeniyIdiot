@@ -29,25 +29,40 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             testLogDataGridView = new DataGridView();
             returnToMainMenuButton = new Button();
             testLogLabel = new Label();
+            lastName_firstName_middleName = new DataGridViewTextBoxColumn();
+            Score = new DataGridViewTextBoxColumn();
+            Result = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)testLogDataGridView).BeginInit();
             SuspendLayout();
             // 
             // testLogDataGridView
             // 
             testLogDataGridView.AllowUserToAddRows = false;
-            testLogDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            testLogDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            testLogDataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            testLogDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            testLogDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            testLogDataGridView.Columns.AddRange(new DataGridViewColumn[] { lastName_firstName_middleName, Score, Result });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            testLogDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             testLogDataGridView.Location = new Point(12, 53);
             testLogDataGridView.Name = "testLogDataGridView";
             testLogDataGridView.RowHeadersVisible = false;
@@ -75,6 +90,30 @@
             testLogLabel.TabIndex = 5;
             testLogLabel.Text = "Журнал тестирования";
             // 
+            // lastName_firstName_middleName
+            // 
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            lastName_firstName_middleName.DefaultCellStyle = dataGridViewCellStyle2;
+            lastName_firstName_middleName.HeaderText = "Фамилия Имя Отчество";
+            lastName_firstName_middleName.Name = "lastName_firstName_middleName";
+            lastName_firstName_middleName.Width = 416;
+            // 
+            // Score
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Score.DefaultCellStyle = dataGridViewCellStyle3;
+            Score.HeaderText = "Баллы";
+            Score.Name = "Score";
+            Score.Width = 67;
+            // 
+            // Result
+            // 
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Result.DefaultCellStyle = dataGridViewCellStyle4;
+            Result.HeaderText = "Диагноз";
+            Result.Name = "Result";
+            Result.Width = 80;
+            // 
             // TestLog
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -99,5 +138,8 @@
         private DataGridView testLogDataGridView;
         private Button returnToMainMenuButton;
         private Label testLogLabel;
+        private DataGridViewTextBoxColumn lastName_firstName_middleName;
+        private DataGridViewTextBoxColumn Score;
+        private DataGridViewTextBoxColumn Result;
     }
 }

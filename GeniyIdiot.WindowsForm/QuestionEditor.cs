@@ -17,22 +17,6 @@ namespace GeniyIdiot.WindowsForm
         public QuestionEditor()
         {
             InitializeComponent();
-            questionEditorDataGridView.Columns.Add("questionNumber", "Номер вопроса");
-            questionEditorDataGridView.Columns.Add("questionText", "Текст вопроса");
-            questionEditorDataGridView.Columns.Add("questionAnswer", "Правильный ответ");
-
-            questionEditorDataGridView.Columns["questionNumber"].Width = 50;
-            questionEditorDataGridView.Columns["questionText"].Width = 340;
-            questionEditorDataGridView.Columns["questionAnswer"].Width = 80;
-
-            questionEditorDataGridView.Columns["questionNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            questionEditorDataGridView.Columns["questionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            questionEditorDataGridView.Columns["questionAnswer"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            foreach (DataGridViewColumn column in questionEditorDataGridView.Columns)
-            {
-                column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -88,7 +72,7 @@ namespace GeniyIdiot.WindowsForm
         {
             if (!File.Exists(_questionListPath))
             {
-                GeniyIdiot.Common.QuestionsStorage.GetAll();
+                QuestionsStorage.GetAll();
             }
             questionEditorDataGridView.Rows.Clear();
             var lines = FileManager.ReadAllLines(_questionListPath);
