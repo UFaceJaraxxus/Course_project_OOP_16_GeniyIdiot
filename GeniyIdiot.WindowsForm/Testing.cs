@@ -1,27 +1,16 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using GeniyIdiot.Common;
+﻿using GeniyIdiot.Common;
 
 namespace GeniyIdiot.WindowsForm
 {
     public partial class Testing : Form
     {
-        private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.txt");
-        private List<Question> questions;
-        private GeniyIdiot.Common.User user;
-        int countQuestionList = 0;
-        private int questionNumber = 1;
-        private string resultToLog;
+        private User user;
+        private List<Question> _questions;
+        private int countQuestionList = 0;
+        private int _questionNumber = 1;
+        private int _rightAnswers = 0;
 
-        public Testing(GeniyIdiot.Common.User user)
+        public Testing(User user)
         {
             InitializeComponent();
             this.user = user;
@@ -29,13 +18,13 @@ namespace GeniyIdiot.WindowsForm
 
         private void Testing_Load(object sender, EventArgs e)
         {
-            questions = QuestionsStorage.Shuffle(QuestionsStorage.GetAll());
+            _questions = QuestionsStorage.Shuffle(QuestionsStorage.Questions);
             ShowNextQuestion();
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            (bool success, int value) userAnswer = GeniyIdiot.Common.Validator.TryParseNumber(userAnswerTextBox.Text.Trim());
+            (bool success, int value) userAnswer = Validator.TryParseNumber(userAnswerTextBox.Text.Trim());
 
             if (userAnswer.success == false)
             {
@@ -45,19 +34,20 @@ namespace GeniyIdiot.WindowsForm
                 return;
             }
 
-            if (userAnswer.value == questions[countQuestionList].Answer)
+            if (userAnswer.value == _questions[countQuestionList].Answer)
             {
-                user.RightAnswers++;
+                _rightAnswers++;
             }
 
             countQuestionList++;            
 
-            if (countQuestionList == questions.Count)
+            if (countQuestionList == _questions.Count)
             {
-                user.Diagnose = UsersResultStorage.GetResult(user.RightAnswers);
+                user.RightAnswers = $"{_rightAnswers}/{_questions.Count}";
+                user.Diagnose = UserResultStorage.GetResult(_rightAnswers);
+                UserResultStorage.UserResults.Add(user);
                 MessageBox.Show($"Поздравляю, {user.FirstName}, Вы - {user.Diagnose}!\nРезультат записан в Журнал тестирования");
-                resultToLog = $"{user}#{user.RightAnswers}/{questions.Count}#{user.Diagnose}";
-                FileManager.Write(resultToLog, _logPath);
+                FileManager.SerializeToFile(UserResultStorage.UserResults, UserResultStorage.LogPath);
                 this.Close();
                 return;
             }            
@@ -67,9 +57,9 @@ namespace GeniyIdiot.WindowsForm
 
         private void ShowNextQuestion()
         {
-            questionNumberLabel.Text = $"Вопрос №{questionNumber}";
-            questionTextLabel.Text = questions[countQuestionList].Text;            
-            questionNumber++;
+            questionNumberLabel.Text = $"Вопрос №{_questionNumber}";
+            questionTextLabel.Text = _questions[countQuestionList].Text;
+            _questionNumber++;
         }
     }
 }

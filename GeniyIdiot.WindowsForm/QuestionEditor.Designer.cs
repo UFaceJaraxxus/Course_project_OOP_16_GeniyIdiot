@@ -29,11 +29,18 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             questionEditorLabel = new Label();
             exitButton = new Button();
             questionEditorDataGridView = new DataGridView();
             addButton = new Button();
             deleteButton = new Button();
+            questionNumber = new DataGridViewTextBoxColumn();
+            questionText = new DataGridViewTextBoxColumn();
+            questionAnswer = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)questionEditorDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -61,17 +68,25 @@
             // questionEditorDataGridView
             // 
             questionEditorDataGridView.AllowUserToAddRows = false;
-            questionEditorDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             questionEditorDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            questionEditorDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            questionEditorDataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            questionEditorDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            questionEditorDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            questionEditorDataGridView.Columns.AddRange(new DataGridViewColumn[] { questionNumber, questionText, questionAnswer });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            questionEditorDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             questionEditorDataGridView.Location = new Point(12, 54);
             questionEditorDataGridView.Name = "questionEditorDataGridView";
             questionEditorDataGridView.RowHeadersVisible = false;
@@ -99,6 +114,30 @@
             deleteButton.Text = "Удалить вопрос";
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
+            // 
+            // questionNumber
+            // 
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            questionNumber.DefaultCellStyle = dataGridViewCellStyle2;
+            questionNumber.HeaderText = "Номер вопроса";
+            questionNumber.Name = "questionNumber";
+            questionNumber.Width = 67;
+            // 
+            // questionText
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            questionText.DefaultCellStyle = dataGridViewCellStyle3;
+            questionText.HeaderText = "Текст вопроса";
+            questionText.Name = "questionText";
+            questionText.Width = 416;
+            // 
+            // questionAnswer
+            // 
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.TopCenter;
+            questionAnswer.DefaultCellStyle = dataGridViewCellStyle4;
+            questionAnswer.HeaderText = "Правильный ответ";
+            questionAnswer.Name = "questionAnswer";
+            questionAnswer.Width = 80;
             // 
             // QuestionEditor
             // 
@@ -128,5 +167,8 @@
         private DataGridView questionEditorDataGridView;
         private Button addButton;
         private Button deleteButton;
+        private DataGridViewTextBoxColumn questionNumber;
+        private DataGridViewTextBoxColumn questionText;
+        private DataGridViewTextBoxColumn questionAnswer;
     }
 }

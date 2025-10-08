@@ -1,10 +1,4 @@
 ﻿using GeniyIdiot.Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeniyIdiot.ConsoleApp
 {
@@ -32,7 +26,8 @@ namespace GeniyIdiot.ConsoleApp
 
                         int rightAnswers = 0;
                         int userAnswer;
-                        var questions = GeniyIdiot.Common.QuestionsStorage.Shuffle(GeniyIdiot.Common.QuestionsStorage.GetAll());
+                        var questions = GeniyIdiot.Common.QuestionsStorage.Shuffle(GeniyIdiot.Common.QuestionsStorage.Questions);
+
                         for (int i = 0; i < questions.Count; i++)
                         {
                             Console.WriteLine(questions[i].Text);
@@ -42,12 +37,13 @@ namespace GeniyIdiot.ConsoleApp
                                 rightAnswers++;
                             }
                         }
-                        user.RightAnswers = $"{user.RightAnswers}/{questions.Count}";
-                        user.Diagnose = UsersResultStorage.GetResult(rightAnswers);
+
+                        user.RightAnswers = $"{rightAnswers}/{questions.Count}";
+                        user.Diagnose = UserResultStorage.GetResult(rightAnswers);
                         Console.WriteLine($"Количество верных ответов: {user.RightAnswers}");                        
                         Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {user.Diagnose}!");
-                        UsersResultStorage.userResults.Add(user);
-                        FileManager.SerializeToFile(UsersResultStorage.userResults, FileManager.LogPath);
+                        UserResultStorage.UserResults.Add(user);
+                        FileManager.SerializeToFile(UserResultStorage.UserResults, UserResultStorage.LogPath);
                         Console.WriteLine("Результат записан в журнал тестирования!");
                         break;
                     case 2:
@@ -58,6 +54,7 @@ namespace GeniyIdiot.ConsoleApp
                         if (Console.ReadLine() == "пароль")
                         {
                             bool isAdminMenu = true;
+
                             while (isAdminMenu)
                             {
                                 Menu.OpenAdminMenu();
@@ -93,12 +90,18 @@ namespace GeniyIdiot.ConsoleApp
 
         public static void PrintLog()
         {
+            if (UserResultStorage.UserResults == null || UserResultStorage.UserResults.Count == 0)
+            {
+                Console.WriteLine("Журнал пуст");
+                return;
+            }
             Console.WriteLine("==================== Журнал тестирования ====================");
             Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
             Console.WriteLine(new string('-', 61));
-            foreach (User user in UsersResultStorage.userResults)
+            foreach (User user in UserResultStorage.UserResults)
             {
-                Console.WriteLine($"{user.LastName} {user.FirstName} {user.MiddleName,-35} | {user.RightAnswers,-10} | {user.Diagnose,-11}");
+                string fullName = $"{user.LastName} {user.FirstName} {user.MiddleName}";
+                Console.WriteLine($"{fullName,-35} | {user.RightAnswers,-10} | {user.Diagnose,-11}");
             }
         }
     }

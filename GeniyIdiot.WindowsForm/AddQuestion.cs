@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using GeniyIdiot.Common;
 
 namespace GeniyIdiot.WindowsForm
 {
     public partial class AddQuestion : Form
     {
-        private string _questionListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.txt");
         public AddQuestion()
         {
             InitializeComponent();
@@ -25,11 +16,22 @@ namespace GeniyIdiot.WindowsForm
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            string newQuestion = newQuestionTextBox.Text.Trim();
-            
-            (bool success, int value) result = GeniyIdiot.Common.Validator.TryParseNumber(newAnswerTextBox.Text.Trim());
+            string newQuestionText = newQuestionTextBox.Text.Trim();
 
-            if (newQuestion == string.Empty || newAnswerTextBox.Text == string.Empty || result.success == false)
+            foreach (Question question in QuestionsStorage.Questions)
+            {
+                if (question.Text.ToLower() == newQuestionText.ToLower())
+                {
+                    MessageBox.Show("Данный вопрос уже есть в списке");
+                    newQuestionTextBox.Clear();
+                    newAnswerTextBox.Clear();
+                    return;
+                }
+            }
+            
+            (bool success, int value) result = Validator.TryParseNumber(newAnswerTextBox.Text.Trim());
+
+            if (newQuestionText == string.Empty || newAnswerTextBox.Text == string.Empty || result.success == false)
             {
                 MessageBox.Show("Недопустимое значение! Повторите попытку");
                 newQuestionTextBox.Clear();
@@ -37,11 +39,11 @@ namespace GeniyIdiot.WindowsForm
                 return;
             }
 
-            string newAnswer = result.value.ToString();
+            int newQuestionAnswer = result.value;
 
-            string newQuestionAndAnswer = newQuestion + "#" + newAnswer;            
-
-            GeniyIdiot.Common.FileManager.Write(newQuestionAndAnswer, _questionListPath);
+            Question newQuestion = new Question(newQuestionText, newQuestionAnswer);
+            QuestionsStorage.Questions.Add(newQuestion);
+            FileManager.SerializeToFile(QuestionsStorage.Questions, QuestionsStorage.QuestionsListPath);
             MessageBox.Show("Вопрос добавлен");
 
             newQuestionTextBox.Clear();

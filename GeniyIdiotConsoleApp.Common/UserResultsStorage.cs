@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace GeniyIdiot.Common
+﻿namespace GeniyIdiot.Common
 {
-    public class UsersResultStorage
+    public class UserResultStorage
     {
         public static string LogPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.json");
-        public static List<User> userResults = FileManager.DeserializeFromFile<List<User>>(LogPath);
+        public static List<User> UserResults = FileManager.DeserializeFromFile<List<User>>(LogPath) ?? new List<User>();
 
         public static string GetResult(int rightAnswers)
         {

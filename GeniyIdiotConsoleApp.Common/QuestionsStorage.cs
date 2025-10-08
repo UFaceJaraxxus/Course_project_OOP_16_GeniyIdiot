@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-
-namespace GeniyIdiot.Common
+﻿namespace GeniyIdiot.Common
 {
     public class QuestionsStorage
     {
         public static string QuestionsListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.json");
-        public static List<Question> questions;
+        public static List<Question> Questions = GetAll();
 
         public static List<Question> GetAll()
         {
-            if (!File.Exists(QuestionsListPath) || new FileInfo(QuestionsListPath).Length == 0)
+            if (!File.Exists(QuestionsListPath))
             {
                 return SeedDefaults();
             }

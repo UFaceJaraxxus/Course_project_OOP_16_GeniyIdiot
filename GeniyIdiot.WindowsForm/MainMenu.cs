@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace GeniyIdiot.WindowsForm
 {
     public partial class MainMenu : Form

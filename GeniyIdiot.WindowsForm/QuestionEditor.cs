@@ -1,13 +1,4 @@
 ﻿using GeniyIdiot.Common;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace GeniyIdiot.WindowsForm
 {
@@ -17,22 +8,6 @@ namespace GeniyIdiot.WindowsForm
         public QuestionEditor()
         {
             InitializeComponent();
-            questionEditorDataGridView.Columns.Add("questionNumber", "Номер вопроса");
-            questionEditorDataGridView.Columns.Add("questionText", "Текст вопроса");
-            questionEditorDataGridView.Columns.Add("questionAnswer", "Правильный ответ");
-
-            questionEditorDataGridView.Columns["questionNumber"].Width = 50;
-            questionEditorDataGridView.Columns["questionText"].Width = 340;
-            questionEditorDataGridView.Columns["questionAnswer"].Width = 80;
-
-            questionEditorDataGridView.Columns["questionNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            questionEditorDataGridView.Columns["questionText"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            questionEditorDataGridView.Columns["questionAnswer"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            foreach (DataGridViewColumn column in questionEditorDataGridView.Columns)
-            {
-                column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -51,20 +26,17 @@ namespace GeniyIdiot.WindowsForm
 
             if (result == DialogResult.Yes)
             {
-                string currentQuestionText = questionEditorDataGridView.CurrentRow.Cells["questionText"].Value + "#" + questionEditorDataGridView.CurrentRow.Cells["questionAnswer"].Value;
+                string selectedQuestionText = questionEditorDataGridView.CurrentRow.Cells["questionText"].Value?.ToString();
 
-                IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
-                List<string> newContent = new List<string>();
-
-                foreach (string file in fileContent)
+                for (int i = 0; i < QuestionsStorage.Questions.Count; i++)
                 {
-                    if (file != currentQuestionText)
+                    if (QuestionsStorage.Questions[i].Text == selectedQuestionText)
                     {
-                        newContent.Add(file);
+                        QuestionsStorage.Questions.RemoveAt(i);
                     }
                 }
 
-                FileManager.WriteAllLines(newContent, _questionListPath);
+                FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
                 LoadQuestionList();
             }
             else
@@ -86,18 +58,12 @@ namespace GeniyIdiot.WindowsForm
 
         private void LoadQuestionList()
         {
-            if (!File.Exists(_questionListPath))
-            {
-                GeniyIdiot.Common.QuestionsStorage.GetAll();
-            }
             questionEditorDataGridView.Rows.Clear();
-            var lines = FileManager.GetAll(_questionListPath);
             int questionCount = 1;
 
-            foreach (var line in lines)
+            foreach (Question question in QuestionsStorage.Questions)
             {
-                var parts = line.Split('#');
-                questionEditorDataGridView.Rows.Add(questionCount, parts[0], parts[1]);
+                questionEditorDataGridView.Rows.Add(questionCount, question.Text, question.Answer);
                 questionCount++;
             }
         }

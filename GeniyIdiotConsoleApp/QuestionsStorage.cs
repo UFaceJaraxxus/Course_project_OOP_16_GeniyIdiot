@@ -1,15 +1,9 @@
 ﻿using GeniyIdiot.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeniyIdiot.ConsoleApp
 {
     internal class QuestionsStorage
     {
-        private static string _questionListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.txt");
         public static void AddOne()
         {
             bool repeatAddQuestion = true;
@@ -18,26 +12,20 @@ namespace GeniyIdiot.ConsoleApp
                 Console.WriteLine("Введите текст вопроса:");
                 string newTextQuestion = Console.ReadLine();
 
-                Console.WriteLine("Введите ответ:");
-                int newAnswerQuestion = ConsoleHelper.SetNumber();
+                Console.WriteLine("Введите правильный ответ:");
+                int newAnswerQuestion = ConsoleHelper.SetNumber();                
 
-                string newQuestion = $"{newTextQuestion}#{newAnswerQuestion}";
-
-                IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
-                foreach (string file in fileContent)
+                foreach (Question question in GeniyIdiot.Common.QuestionsStorage.Questions)
                 {
-                    if (newQuestion.ToLower().Equals(file.ToLower()))
+                    if (question.Text.ToLower() == newTextQuestion.ToLower())
                     {
                         Console.WriteLine("Данный вопрос уже присутствует в списке");
                         return;
                     }
                 }
 
-                using (StreamWriter sw = new StreamWriter(_questionListPath, true, System.Text.Encoding.Default))
-                {
-                    sw.WriteLine(newQuestion);
-                    Console.WriteLine("Вопрос добавлен в список");
-                }
+                Question newQuestion = new Question(newTextQuestion, newAnswerQuestion);
+                GeniyIdiot.Common.QuestionsStorage.Questions.Add(newQuestion);
 
                 Console.WriteLine("Добавить ещё вопрос? (да/нет)");
                 string userChoice = ConsoleHelper.CheckYesOrNot();
@@ -47,6 +35,7 @@ namespace GeniyIdiot.ConsoleApp
                 }
                 else
                 {
+                    FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
                     repeatAddQuestion = false;
                 }
             }
@@ -59,11 +48,9 @@ namespace GeniyIdiot.ConsoleApp
             {
                 PrintAll();
                 Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
-                int questionNumber = ConsoleHelper.SetNumber();
+                int DelQuestionNumber = ConsoleHelper.SetNumber();
 
-                var lines = FileManager.GetAll(_questionListPath).ToList();
-                lines.RemoveAt(questionNumber - 1);
-                FileManager.WriteAllLines(lines, _questionListPath);
+                GeniyIdiot.Common.QuestionsStorage.Questions.RemoveAt(DelQuestionNumber - 1);
 
                 Console.WriteLine("Вопрос удалён.");
 
@@ -75,6 +62,7 @@ namespace GeniyIdiot.ConsoleApp
                 }
                 else
                 {
+                    FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
                     repeatDeleteQuestion = false;
                 }
             }
@@ -82,13 +70,11 @@ namespace GeniyIdiot.ConsoleApp
 
         public static void PrintAll()
         {
-            IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
             int countQuestion = 1;
             Console.WriteLine("--------------------- Список вопросов ---------------------");
-            foreach (string line in fileContent)
+            foreach (Question question in GeniyIdiot.Common.QuestionsStorage.Questions)
             {
-                Console.Write($"{countQuestion}. {line}");
-                Console.WriteLine();
+                Console.WriteLine($"{countQuestion}. Вопрос: {question.Text} Правильный ответ: {question.Answer}");
                 countQuestion++;
             }
         }
