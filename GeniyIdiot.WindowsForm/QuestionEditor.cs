@@ -53,7 +53,7 @@ namespace GeniyIdiot.WindowsForm
             {
                 string currentQuestionText = questionEditorDataGridView.CurrentRow.Cells["questionText"].Value + "#" + questionEditorDataGridView.CurrentRow.Cells["questionAnswer"].Value;
 
-                IEnumerable<string> fileContent = FileManager.ReadAllLines(_questionListPath);
+                IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
                 List<string> newContent = new List<string>();
 
                 foreach (string file in fileContent)
@@ -91,7 +91,7 @@ namespace GeniyIdiot.WindowsForm
                 GeniyIdiot.Common.QuestionsStorage.GetAll();
             }
             questionEditorDataGridView.Rows.Clear();
-            var lines = FileManager.ReadAllLines(_questionListPath);
+            var lines = FileManager.GetAll(_questionListPath);
             int questionCount = 1;
 
             foreach (var line in lines)

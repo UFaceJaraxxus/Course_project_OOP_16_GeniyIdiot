@@ -1,32 +1,50 @@
-﻿namespace GeniyIdiot.Common
+﻿using Newtonsoft.Json;
+using System.Text;
+
+namespace GeniyIdiot.Common
 {
     public class FileManager
     {
         public static void Write(string value, string path)
         {
-            using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.UTF8))
             {
                 sw.WriteLine(value);
+            }
+        }
+        //всё ок
+        public static void Replace(string path, string value)
+        {
+            using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))
+            {
+                sw.Write(value);
             }
         }
 
         public static void WriteAllLines(IEnumerable<string> lines, string path)
         {
-            File.WriteAllLines(path, lines, System.Text.Encoding.Default);
+            File.WriteAllLines(path, lines, System.Text.Encoding.UTF8);
         }
-
-        public static IEnumerable<string> ReadAllLines(string path)
+        //всё ок
+        public static string GetAll(string path)
         {
-            try
+            if (!File.Exists(path))
             {
-                IEnumerable<string> lines = File.ReadLines(path);
-                return lines;
+                return string.Empty;
             }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("Файл не найден!");
-            }
-            return Enumerable.Empty<string>();
+            return File.ReadAllText(path, System.Text.Encoding.UTF8);
+        }
+        // сериализация
+        public static void SerializeToFile<T>(T obj, string path)
+        {
+            string jsonData = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            FileManager.Replace(jsonData, path);
+        }
+        // десериализация
+        public static T DeserializeFromFile<T>(string path)
+        {
+            string contentFile = FileManager.GetAll(path);
+            return JsonConvert.DeserializeObject<T>(contentFile);
         }
     }
 }

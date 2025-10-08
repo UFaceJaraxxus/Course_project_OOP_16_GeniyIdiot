@@ -1,24 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace GeniyIdiot.Common
 {
     public class QuestionsStorage
     {
-        private static string _questionListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.txt");
+        public static string QuestionsListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.json");
+        public static List<Question> questions;
+
         public static List<Question> GetAll()
         {
-            if (!File.Exists(_questionListPath) || new FileInfo(_questionListPath).Length == 0)
+            if (!File.Exists(QuestionsListPath) || new FileInfo(QuestionsListPath).Length == 0)
             {
-                SeedDefaults();
+                return SeedDefaults();
             }
-            List<Question> questions = new List<Question>();
-            IEnumerable<string> fileContent = FileManager.ReadAllLines(_questionListPath);
-            foreach (string line in fileContent)
-            {
-                string[] currentLine = line.Split('#');
-                questions.Add(new Question(currentLine[0], Convert.ToInt32(currentLine[1])));
-            }
-            return questions;
+            return FileManager.DeserializeFromFile<List<Question>>(QuestionsListPath);
         }
 
         public static List<Question> SeedDefaults()
@@ -31,12 +27,6 @@ namespace GeniyIdiot.Common
                 new Question("Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?", 60),
                 new Question("Пять свечей горело, две потухли. Сколько свечей осталось?", 2)
             };
-
-            for (int i = 0; i < questions.Count; i++)
-            {
-                string currentQuestion = $"{questions[i].Text}#{questions[i].Answer}";
-                FileManager.Write(currentQuestion, _questionListPath);
-            }
             return questions;
         }
 
@@ -49,6 +39,6 @@ namespace GeniyIdiot.Common
                 (questions[i], questions[j]) = (questions[j], questions[i]);
             }
             return questions;
-        }
+        }        
     }
 }

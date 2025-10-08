@@ -23,7 +23,7 @@ namespace GeniyIdiot.ConsoleApp
 
                 string newQuestion = $"{newTextQuestion}#{newAnswerQuestion}";
 
-                IEnumerable<string> fileContent = FileManager.ReadAllLines(_questionListPath);
+                IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
                 foreach (string file in fileContent)
                 {
                     if (newQuestion.ToLower().Equals(file.ToLower()))
@@ -61,7 +61,7 @@ namespace GeniyIdiot.ConsoleApp
                 Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
                 int questionNumber = ConsoleHelper.SetNumber();
 
-                var lines = FileManager.ReadAllLines(_questionListPath).ToList();
+                var lines = FileManager.GetAll(_questionListPath).ToList();
                 lines.RemoveAt(questionNumber - 1);
                 FileManager.WriteAllLines(lines, _questionListPath);
 
@@ -82,7 +82,7 @@ namespace GeniyIdiot.ConsoleApp
 
         public static void PrintAll()
         {
-            IEnumerable<string> fileContent = FileManager.ReadAllLines(_questionListPath);
+            IEnumerable<string> fileContent = FileManager.GetAll(_questionListPath);
             int countQuestion = 1;
             Console.WriteLine("--------------------- Список вопросов ---------------------");
             foreach (string line in fileContent)

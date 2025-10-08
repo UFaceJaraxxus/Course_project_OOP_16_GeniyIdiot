@@ -25,7 +25,7 @@ namespace GeniyIdiot.WindowsForm
 
         private void testLogForm_Load(object sender, EventArgs e)
         {
-            var lines = FileManager.ReadAllLines(_logPath);
+            var lines = FileManager.GetAll(_logPath);
 
             foreach (var line in lines)
             {

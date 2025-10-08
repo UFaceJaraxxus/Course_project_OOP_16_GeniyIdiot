@@ -5,8 +5,8 @@
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
-        public int RightAnswers;
-        public string Diagnose;
+        public string RightAnswers { get; set; }
+        public string Diagnose { get; set; }
 
         public User(string lastName, string firstName, string middleName)
         {

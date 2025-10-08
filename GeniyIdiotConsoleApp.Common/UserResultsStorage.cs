@@ -1,7 +1,12 @@
-﻿namespace GeniyIdiot.Common
+﻿using Newtonsoft.Json;
+
+namespace GeniyIdiot.Common
 {
     public class UsersResultStorage
     {
+        public static string LogPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.json");
+        public static List<User> userResults = FileManager.DeserializeFromFile<List<User>>(LogPath);
+
         public static string GetResult(int rightAnswers)
         {
             int ratioRightAnswers = rightAnswers * 100 / QuestionsStorage.GetAll().Count;
@@ -20,6 +25,6 @@
                     return "кретин";
             }
             return "идиот";
-        }        
+        }
     }
 }

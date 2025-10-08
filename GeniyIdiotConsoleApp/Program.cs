@@ -10,7 +10,6 @@ namespace GeniyIdiot.ConsoleApp
 {
     internal class Program
     {
-        private static string _logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Журнал тестирования.txt");
         public static void Main(string[] args)
         {
             while (true)
@@ -31,9 +30,8 @@ namespace GeniyIdiot.ConsoleApp
 
                         var user = new User(lastName, firstName, middleName);
 
-                        user.RightAnswers = 0;
+                        int rightAnswers = 0;
                         int userAnswer;
-                        string resultToLog;
                         var questions = GeniyIdiot.Common.QuestionsStorage.Shuffle(GeniyIdiot.Common.QuestionsStorage.GetAll());
                         for (int i = 0; i < questions.Count; i++)
                         {
@@ -41,13 +39,15 @@ namespace GeniyIdiot.ConsoleApp
                             userAnswer = ConsoleHelper.SetNumber();
                             if (userAnswer == questions[i].Answer)
                             {
-                                user.RightAnswers++;
+                                rightAnswers++;
                             }
                         }
-                        Console.WriteLine($"Количество верных ответов: {user.RightAnswers}/{questions.Count}");
-                        Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {UsersResultStorage.GetResult(user.RightAnswers)}!");
-                        resultToLog = $"{user}#{user.RightAnswers}/{questions.Count}#{UsersResultStorage.GetResult(user.RightAnswers)}";
-                        FileManager.Write(resultToLog, _logPath);
+                        user.RightAnswers = $"{user.RightAnswers}/{questions.Count}";
+                        user.Diagnose = UsersResultStorage.GetResult(rightAnswers);
+                        Console.WriteLine($"Количество верных ответов: {user.RightAnswers}");                        
+                        Console.WriteLine($"Поздравляю, {user.FirstName}, Вы - {user.Diagnose}!");
+                        UsersResultStorage.userResults.Add(user);
+                        FileManager.SerializeToFile(UsersResultStorage.userResults, FileManager.LogPath);
                         Console.WriteLine("Результат записан в журнал тестирования!");
                         break;
                     case 2:
@@ -93,14 +93,12 @@ namespace GeniyIdiot.ConsoleApp
 
         public static void PrintLog()
         {
-            IEnumerable<string> fileContent = FileManager.ReadAllLines(_logPath);
             Console.WriteLine("==================== Журнал тестирования ====================");
             Console.WriteLine($"{"Фамилия Имя Отчество",-35} | {"Баллы",-10} | {"Результат",-11}");
             Console.WriteLine(new string('-', 61));
-            foreach (string line in fileContent)
+            foreach (User user in UsersResultStorage.userResults)
             {
-                string[] currentLine = line.Split('#');
-                Console.WriteLine($"{currentLine[0],-35} | {currentLine[1],-10} | {currentLine[2],-11}");
+                Console.WriteLine($"{user.LastName} {user.FirstName} {user.MiddleName,-35} | {user.RightAnswers,-10} | {user.Diagnose,-11}");
             }
         }
     }
