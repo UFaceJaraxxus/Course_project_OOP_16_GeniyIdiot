@@ -4,7 +4,6 @@ namespace GeniyIdiot.WindowsForm
 {
     public partial class QuestionEditor : Form
     {
-        private string _questionListPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Список вопросов.txt");
         public QuestionEditor()
         {
             InitializeComponent();
@@ -36,7 +35,7 @@ namespace GeniyIdiot.WindowsForm
                     }
                 }
 
-                FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
+                FileManager.SerializeToFile(QuestionsStorage.Questions, QuestionsStorage.QuestionsListPath);
                 LoadQuestionList();
             }
             else

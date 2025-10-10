@@ -32,12 +32,12 @@ namespace GeniyIdiot.Common
         public static void SerializeToFile<T>(T obj, string path)
         {
             string jsonData = JsonConvert.SerializeObject(obj, Formatting.Indented);
-            FileManager.Replace(jsonData, path);
+            Replace(jsonData, path);
         }
 
         public static T DeserializeFromFile<T>(string path)
         {
-            string contentFile = FileManager.GetAll(path);
+            string contentFile = GetAll(path);
             return JsonConvert.DeserializeObject<T>(contentFile);
         }
     }
