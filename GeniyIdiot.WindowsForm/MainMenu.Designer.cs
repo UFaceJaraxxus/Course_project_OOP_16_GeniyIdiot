@@ -32,6 +32,7 @@
             startButton = new Button();
             adminMenuButton = new Button();
             logButton = new Button();
+            exitButton = new Button();
             SuspendLayout();
             // 
             // mainMenuLabel
@@ -79,11 +80,22 @@
             logButton.UseVisualStyleBackColor = true;
             logButton.Click += logButton_Click;
             // 
+            // exitButton
+            // 
+            exitButton.Location = new Point(60, 199);
+            exitButton.Name = "exitButton";
+            exitButton.Size = new Size(188, 23);
+            exitButton.TabIndex = 4;
+            exitButton.Text = "Выйти из программы";
+            exitButton.UseVisualStyleBackColor = true;
+            exitButton.Click += exitButton_Click;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(292, 272);
+            Controls.Add(exitButton);
             Controls.Add(logButton);
             Controls.Add(adminMenuButton);
             Controls.Add(startButton);
@@ -101,5 +113,6 @@
         private Button startButton;
         private Button adminMenuButton;
         private Button logButton;
+        private Button exitButton;
     }
 }
