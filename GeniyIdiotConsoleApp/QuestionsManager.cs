@@ -2,7 +2,7 @@
 
 namespace GeniyIdiot.ConsoleApp
 {
-    internal class QuestionsStorage
+    internal class QuestionsManager
     {
         public static void AddOne()
         {

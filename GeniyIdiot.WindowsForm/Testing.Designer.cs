@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             userAnswerTextBox = new TextBox();
             questionNumberLabel = new Label();
             questionTextLabel = new Label();
             nextButton = new Button();
+            testTimer = new System.Windows.Forms.Timer(components);
+            timeLeftLabel = new Label();
+            timerLabel = new Label();
             SuspendLayout();
             // 
             // userAnswerTextBox
@@ -70,11 +74,38 @@
             nextButton.UseVisualStyleBackColor = true;
             nextButton.Click += nextButton_Click;
             // 
+            // testTimer
+            // 
+            testTimer.Enabled = true;
+            testTimer.Interval = 1000;
+            testTimer.Tick += testTimer_Tick;
+            // 
+            // timeLeftLabel
+            // 
+            timeLeftLabel.AutoSize = true;
+            timeLeftLabel.Location = new Point(416, 9);
+            timeLeftLabel.Name = "timeLeftLabel";
+            timeLeftLabel.Size = new Size(113, 15);
+            timeLeftLabel.TabIndex = 4;
+            timeLeftLabel.Text = "Осталось времени:";
+            // 
+            // timerLabel
+            // 
+            timerLabel.AutoSize = true;
+            timerLabel.Location = new Point(463, 33);
+            timerLabel.Name = "timerLabel";
+            timerLabel.Size = new Size(19, 15);
+            timerLabel.TabIndex = 5;
+            timerLabel.Text = "10";
+            // 
             // Testing
             // 
+            AcceptButton = nextButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(538, 268);
+            Controls.Add(timerLabel);
+            Controls.Add(timeLeftLabel);
             Controls.Add(nextButton);
             Controls.Add(questionTextLabel);
             Controls.Add(questionNumberLabel);
@@ -93,5 +124,8 @@
         private Label questionNumberLabel;
         private Label questionTextLabel;
         private Button nextButton;
+        private System.Windows.Forms.Timer testTimer;
+        private Label timeLeftLabel;
+        private Label timerLabel;
     }
 }

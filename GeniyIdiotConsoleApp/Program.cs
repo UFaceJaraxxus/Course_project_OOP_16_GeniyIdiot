@@ -26,7 +26,7 @@ namespace GeniyIdiot.ConsoleApp
 
                         int rightAnswers = 0;
                         int userAnswer;
-                        var questions = GeniyIdiot.Common.QuestionsStorage.Shuffle(GeniyIdiot.Common.QuestionsStorage.Questions);
+                        var questions = QuestionsStorage.Shuffle(QuestionsStorage.Questions);
 
                         for (int i = 0; i < questions.Count; i++)
                         {
@@ -62,13 +62,13 @@ namespace GeniyIdiot.ConsoleApp
                                 switch (adminChoice)
                                 {
                                     case 1:
-                                        QuestionsStorage.AddOne();
+                                        QuestionsManager.AddOne();
                                         break;
                                     case 2:
-                                        QuestionsStorage.PrintAll();
+                                        QuestionsManager.PrintAll();
                                         break;
                                     case 3:
-                                        QuestionsStorage.DeleteOne();
+                                        QuestionsManager.DeleteOne();
                                         break;
                                     case 4:
                                         isAdminMenu = false;
