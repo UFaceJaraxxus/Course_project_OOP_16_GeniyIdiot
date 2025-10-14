@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeniyIdiotConsoleApp.Common\GeniyIdiot.Common.csproj" />
+    <ProjectReference Include="..\GeniyIdiot.Common\GeniyIdiot.Common.csproj" />
   </ItemGroup>
 
 </Project>
