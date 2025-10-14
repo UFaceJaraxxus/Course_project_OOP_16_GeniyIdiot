@@ -15,7 +15,7 @@ namespace GeniyIdiot.ConsoleApp
                 Console.WriteLine("Введите правильный ответ:");
                 int newAnswerQuestion = ConsoleHelper.SetNumber();                
 
-                foreach (Question question in GeniyIdiot.Common.QuestionsStorage.Questions)
+                foreach (Question question in QuestionsStorage.Questions)
                 {
                     if (question.Text.ToLower() == newTextQuestion.ToLower())
                     {
@@ -25,7 +25,7 @@ namespace GeniyIdiot.ConsoleApp
                 }
 
                 Question newQuestion = new Question(newTextQuestion, newAnswerQuestion);
-                GeniyIdiot.Common.QuestionsStorage.Questions.Add(newQuestion);
+                QuestionsStorage.Questions.Add(newQuestion);
 
                 Console.WriteLine("Добавить ещё вопрос? (да/нет)");
                 string userChoice = ConsoleHelper.CheckYesOrNot();
@@ -35,7 +35,7 @@ namespace GeniyIdiot.ConsoleApp
                 }
                 else
                 {
-                    FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
+                    FileManager.SerializeToFile(QuestionsStorage.Questions, QuestionsStorage.QuestionsListPath);
                     repeatAddQuestion = false;
                 }
             }
@@ -50,7 +50,7 @@ namespace GeniyIdiot.ConsoleApp
                 Console.WriteLine("Выберите номер вопроса, который нужно удалить:");
                 int DelQuestionNumber = ConsoleHelper.SetNumber();
 
-                GeniyIdiot.Common.QuestionsStorage.Questions.RemoveAt(DelQuestionNumber - 1);
+                QuestionsStorage.Questions.RemoveAt(DelQuestionNumber - 1);
 
                 Console.WriteLine("Вопрос удалён.");
 
@@ -62,7 +62,7 @@ namespace GeniyIdiot.ConsoleApp
                 }
                 else
                 {
-                    FileManager.SerializeToFile(GeniyIdiot.Common.QuestionsStorage.Questions, GeniyIdiot.Common.QuestionsStorage.QuestionsListPath);
+                    FileManager.SerializeToFile(QuestionsStorage.Questions, QuestionsStorage.QuestionsListPath);
                     repeatDeleteQuestion = false;
                 }
             }
@@ -72,7 +72,7 @@ namespace GeniyIdiot.ConsoleApp
         {
             int countQuestion = 1;
             Console.WriteLine("--------------------- Список вопросов ---------------------");
-            foreach (Question question in GeniyIdiot.Common.QuestionsStorage.Questions)
+            foreach (Question question in QuestionsStorage.Questions)
             {
                 Console.WriteLine($"{countQuestion}. Вопрос: {question.Text} Правильный ответ: {question.Answer}");
                 countQuestion++;

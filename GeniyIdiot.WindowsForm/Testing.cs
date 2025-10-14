@@ -42,7 +42,6 @@ namespace GeniyIdiot.WindowsForm
             {
                 MessageBox.Show("Недопустимое значение! Повторите попытку");
                 userAnswerTextBox.Clear();
-                userAnswerTextBox.Clear();
                 return;
             }
 
