@@ -11,9 +11,11 @@
 
 ## Демонстрация работы
 1. Консольное приложение
+
 ![ConsoleDemostration](https://github.com/user-attachments/assets/24978605-30fe-4625-9bd2-fe589fdd9583)
 
 2. WinForms-приложение
+
 ![WinFormsDemostration](https://github.com/user-attachments/assets/850c5fa5-4736-4db3-be94-96f4352abd7f)
 
 # 🛠️Техническая часть
